@@ -51,3 +51,12 @@ public String excluirAluno(@PathVariable Long id, RedirectAttributes redirect) {
     return "redirect:/";
 }
 
+    @PostMapping("/salvar")
+public String salvarAluno(@Valid @ModelAttribute Aluno aluno, BindingResult result, Model model) {
+    if (result.hasErrors()) {
+        model.addAttribute("alunos", alunoRepository.findAll());
+        return "index";
+    }
+    alunoRepository.save(aluno);
+    return "redirect:/";
+}
