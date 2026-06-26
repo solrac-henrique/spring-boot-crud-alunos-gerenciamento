@@ -40,10 +40,13 @@ public class AlunoController {
         return "index";
     }
 
-    @GetMapping("/excluir/{id}")
-public String excluirAluno(@PathVariable Long id) {
+   @GetMapping("/excluir/{id}")
+public String excluirAluno(@PathVariable Long id, RedirectAttributes redirect) {
     if (alunoRepository.existsById(id)) {
         alunoRepository.deleteById(id);
+        redirect.addFlashAttribute("mensagem", "Aluno excluído com sucesso!");
+    } else {
+        redirect.addFlashAttribute("erro", "Aluno não encontrado!");
     }
     return "redirect:/";
 }
