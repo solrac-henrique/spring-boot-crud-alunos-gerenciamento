@@ -39,4 +39,12 @@ public class AlunoController {
         model.addAttribute("alunos", alunoRepository.findAll());
         return "index";
     }
+
+    @GetMapping("/excluir/{id}")
+public String excluirAluno(@PathVariable Long id) {
+    if (alunoRepository.existsById(id)) {
+        alunoRepository.deleteById(id);
+    }
+    return "redirect:/";
 }
+
