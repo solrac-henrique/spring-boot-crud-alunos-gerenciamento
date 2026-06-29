@@ -1,44 +1,66 @@
 # Sistema de Gerenciamento de Alunos
 
-Aplicação web em **Java + Spring Boot**, estruturada no padrão **MVC**, para gerenciamento de alunos com acesso restrito a um administrador autenticado.
+Aplicação web em Java + Spring Boot, estruturada no padrão MVC, para gerenciamento de alunos com acesso restrito a um administrador autenticado.
 
-## Sobre o projeto
+---
+
+## 📋 Sobre o projeto
 
 O sistema possui uma única tela de login, destinada ao administrador. Após a autenticação, é possível cadastrar, editar, listar e excluir alunos. Não há cadastro próprio para os alunos — eles são apenas registros gerenciados pelo administrador logado.
 
-A senha do administrador não é armazenada em texto puro: ela passa por **hash com BCrypt** antes de ser salva no banco, seguindo uma prática básica e essencial de segurança no tratamento de credenciais.
+A senha do administrador é armazenada com **hash BCrypt**, garantindo que a credencial nunca fique em texto puro no banco de dados.
 
-## Funcionalidades
+---
 
-- Login do administrador, com senha protegida por hash (BCrypt)
-- Cadastro de alunos (nome, matrícula, curso, e-mail, status)
-- Edição e exclusão de alunos
-- Listagem de todos os alunos cadastrados
-- Persistência dos dados em banco H2
+## ✅ Funcionalidades implementadas
 
-## Tecnologias utilizadas
+- 🔐 Login do administrador com senha protegida por BCrypt
+- 📝 Cadastro de alunos com validação (`@NotBlank`, `@Email`)
+- ✏️ Edição e exclusão de alunos com confirmação
+- 📋 Listagem de todos os alunos cadastrados
+- 💬 Mensagens de feedback estilizadas (sucesso/erro)
+- 🛡️ Tratamento de erros (aluno não encontrado, campos inválidos)
+- 🔒 Proteção de todas as rotas (só admin logado acessa)
 
-- **Java**
-- **Spring Boot**
-- **Spring Security** (autenticação e hash de senha com BCrypt)
-- **Spring Data JPA**
-- **Thymeleaf** (renderização das páginas HTML no servidor)
-- **H2 Database** (banco de dados em memória)
-- **Maven**
+---
 
-## Arquitetura
+## 🛠 Tecnologias utilizadas
+
+| Tecnologia | Descrição |
+|---|---|
+| **Java 17** | Linguagem de programação |
+| **Spring Boot 3** | Framework principal |
+| **Spring Security** | Autenticação e hash de senha (BCrypt) |
+| **Spring Data JPA** | Persistência e ORM |
+| **Thymeleaf** | Renderização de páginas HTML no servidor |
+| **H2 Database** | Banco de dados em memória |
+| **Bean Validation** | Validação de campos (`@NotBlank`, `@Email`) |
+| **Maven** | Gerenciador de dependências |
+
+---
+
+## 🏗 Arquitetura
 
 O projeto segue o padrão **MVC (Model-View-Controller)**:
 
-- **Model**: entidades persistidas via JPA (ex: `Aluno`, `Administrador`)
-- **View**: páginas HTML renderizadas com Thymeleaf
-- **Controller**: classes responsáveis por receber requisições e orquestrar a lógica entre a View e o Model
+src/main/java/com/gerenciamento/alunos/
+├── model/ → Entidades JPA (Aluno)
+├── repository/ → Interfaces JPA (AlunoRepository)
+├── controller/ → Controllers (AlunoController)
+└── config/ → Configurações (SecurityConfig)
 
-## Como executar o projeto localmente
+- **Model:** entidades persistidas via JPA
+- **View:** páginas HTML renderizadas com Thymeleaf
+- **Controller:** orquestra a lógica entre View e Model
+
+---
+
+## 🚀 Como executar localmente
 
 ### Pré-requisitos
-- JDK 17 ou superior instalado
-- Maven (ou usar o Maven Wrapper já incluso no projeto, `mvnw`)
+
+- JDK 17 ou superior
+- Maven (ou use o Maven Wrapper incluso)
 
 ### Passo a passo
 
@@ -46,28 +68,43 @@ O projeto segue o padrão **MVC (Model-View-Controller)**:
 # Clone o repositório
 git clone https://github.com/solrac-henrique/spring-boot-crud-alunos-gerenciamento.git
 
-# Acesse a pasta do projeto
+# Acesse a pasta
 cd spring-boot-crud-alunos-gerenciamento
 
-# Execute com o Maven Wrapper (Linux/Mac)
+# Execute (Linux/Mac)
 ./mvnw spring-boot:run
 
 # Ou no Windows
 mvnw.cmd spring-boot:run
-```
 
-A aplicação estará disponível em `http://localhost:8080`.
+Acesse: http://localhost:8080
 
-> Por usar o banco H2 em memória, os dados cadastrados são reiniciados a cada vez que a aplicação é reiniciada — não há necessidade de configurar nenhum banco externo para testar o projeto.
+Credenciais de acesso
+Campo	Valor
+Usuário	admin
+Senha	admin123
+⚠️ O banco H2 é em memória. Os dados são perdidos ao reiniciar a aplicação.
 
-## Próximos passos
+🎨 Preview da interface
+https://login.png
+https://cadastro.png
 
-Algumas melhorias que pretendo implementar:
+🔜 Próximos passos
+🧪 Testes unitários para Services e Controllers
 
-- [ ] Validação de campos no formulário de cadastro (ex: e-mail e matrícula únicos)
-- [ ] Testes unitários para os Services e Controllers
-- [ ] Migrar para um banco persistente (PostgreSQL) como opção de configuração
+🐘 Migrar para banco PostgreSQL (opcional)
 
-## Autor
+🐳 Dockerfile e docker-compose
 
-Desenvolvido por [Carlos Henrique Martins](https://github.com/solrac-henrique).
+📊 Dashboard com gráficos (alunos por curso/status)
+
+🔄 API REST com Swagger/OpenAPI
+
+
+👤 Autor
+Desenvolvido por Carlos Henrique Martins
+
+
+
+📄 Licença
+Este projeto está sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
