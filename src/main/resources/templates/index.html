@@ -14,10 +14,20 @@
       <p class="subtitulo">Cadastre, edite e gerencie os alunos do sistema</p>
     </header>
 
+    <!-- Mensagens de feedback -->
+    <div th:if="${sucesso}" class="mensagem-sucesso" th:text="${sucesso}"></div>
+    <div th:if="${erro}" class="mensagem-erro" th:text="${erro}"></div>
+
+    <!-- Formulário -->
     <section class="card">
       <h2 th:text="${aluno != null} ? 'Editar Aluno' : 'Cadastrar Aluno'">Cadastrar Aluno</h2>
       <form th:action="@{/salvar}" method="post">
         <input type="hidden" th:value="${aluno?.id}" name="id">
+
+        <!-- Exibe erros de validação -->
+        <div th:if="${#fields.hasErrors('*')}" class="mensagem-erro">
+          <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+        </div>
 
         <div class="form-grid">
           <div class="campo">
@@ -43,6 +53,7 @@
           <div class="campo">
             <label for="status">Status</label>
             <select id="status" name="status" required>
+              <option value="">Selecione...</option>
               <option value="Ativo" th:selected="${aluno?.status == 'Ativo'}">Ativo</option>
               <option value="Inativo" th:selected="${aluno?.status == 'Inativo'}">Inativo</option>
             </select>
@@ -56,6 +67,7 @@
       </form>
     </section>
 
+    <!-- Tabela de Alunos -->
     <section class="card">
       <h2>Alunos Cadastrados</h2>
       <div class="tabela-container">
